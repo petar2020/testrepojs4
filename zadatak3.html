@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zadatak 3</title>
+</head>
+
+<body>
+    <div>
+        <input type="radio" name="opcije" value="kupa"> Kupa
+        <input type="radio" name="opcije" value="valjak"> Valjak
+        <input type="radio" name="opcije" value="lopta"> Lopta
+        <input type="radio" name="opcije" checked value="kvadar"> Kvadar
+    </div>
+    <div id="cont1">
+        <label id="labV1">a</label>
+        <input id="inV1" type="number">
+    </div>
+    <div id="cont2">
+        <label id="labV2">b</label>
+        <input id="inV2" type="number">
+    </div>
+    <div id="cont3">
+        <label id="labV3">c</label>
+        <input id="inV3" type="number">
+    </div>
+    <div>
+        <button id="calc">Izracunaj P i V</button>
+    </div>
+    <script>
+        const cont1 = document.getElementById('cont1');
+        const labV1 = document.getElementById('labV1');
+        const inV1 = document.getElementById('inV1');
+        const cont2 = document.getElementById('cont2');
+        const labV2 = document.getElementById('labV2');
+        const inV2 = document.getElementById('inV2');
+        const cont3 = document.getElementById('cont3');
+        const labV3 = document.getElementById('labV3');
+        const inV3 = document.getElementById('inV3');
+        const opcije = document.getElementsByName('opcije');
+        const calc = document.getElementById('calc');
+
+        function sta_je_izabrano() {
+            for (let opcija of opcije) {
+                if (opcija.checked == true) {
+                    return opcija.value;
+                }
+            }
+        }
+
+        function prikaz_polja_za_unos() {
+            const izbor = sta_je_izabrano();
+
+            switch (izbor) {
+                case "kupa":
+                    cont1.style = "display:block";
+                    cont2.style = "display:block";
+                    cont3.style = "display:blcok";
+                    labV1.innerHTML = 'r';
+                    labV2.innerHTML = 's';
+                    labV3.innerHTML = 'H';
+                    break;
+                case "lopta":
+                    cont1.style = "display:block";
+                    cont2.style = "display:none";
+                    cont3.style = "display:none";
+                    labV1.innerHTML = 'r';
+                    break;
+                case "valjak":
+                    cont1.style = "display:block";
+                    cont2.style = "display:none";
+                    cont3.style = "display:blcok";
+                    labV1.innerHTML = 'r';
+                    labV3.innerHTML = 'H';
+                    break;
+                case "kvadar":
+                    cont1.style = "display:block";
+                    cont2.style = "display:block";
+                    cont3.style = "display:blcok";
+                    labV1.innerHTML = 'a';
+                    labV2.innerHTML = 'b';
+                    labV3.innerHTML = 'c';
+                    break;
+            }
+        }
+
+        function racunaj_povrsinu() {
+            const izbor = sta_je_izabrano();
+            const x = inV1.value;
+            const y = inV2.value;
+            const z = inV3.value;
+            switch (izbor) {
+                case "kupa":
+                    return x * x * Math.PI + x * Math.PI * y;
+                case "lopta":
+                    return 4 * x * x * Math.PI;
+                case "valjak":
+                    return 2 * x * x * Math.PI + 2 * x * Math.PI * z;
+                case "kvadar":
+                    return 2 * (x * y + x * z + y * z);
+            }
+        }
+
+        function racunaj_zapreminu() {
+            const izbor = sta_je_izabrano();
+            const x = inV1.value;
+            const y = inV2.value;
+            const z = inV3.value;
+            switch (izbor) {
+                case "kupa":
+                    return (x * x * Math.PI * z) / 3;
+                case "lopta":
+                    return 4 * x * x * x * Math.PI / 3;
+                case "valjak":
+                    return x * x * Math.PI * z;
+                case "kvadar":
+                    return x * y * z;
+            }
+        }
+
+        for (let opcija of opcije) {
+            opcija.onchange = prikaz_polja_za_unos;
+        }
+
+        calc.onclick = () => {
+            alert("P =" + racunaj_povrsinu() + "\n"
+                + "V = " + racunaj_zapreminu());
+        }
+
+    </script>
+</body>
+
+</html>
